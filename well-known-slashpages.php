@@ -91,78 +91,122 @@ function get_script_urls() {
 /**
  * The slash pages listed on https://slashpages.net/.
  *
- * @return string[] Map of slash page name => description.
+ * The first name is the key, other names of the same page are `aliases`.
+ *
+ * @return array[] Map of slash page name => `description` and optional `aliases`.
  */
 function get_slashpages() {
 	$slashpages = array(
-		'about'        => 'A page all about you',
-		'ai'           => 'Describes how you use, or don\'t use, AI',
-		'blank'        => 'A page left intentionally blank',
-		'blogroll'     => 'Other sites you read, follow, or recommend',
-		'calendar'     => 'Dates from movies, TV, and culture that you observe',
-		'canon'        => 'An annotated list of the things that have most shaped you',
-		'carry'        => 'Your everyday carry items',
-		'caw'          => 'Crows',
-		'celebrities'  => 'Celebrities you\'ve spotted or met',
-		'changelog'    => 'A summary of changes to your website',
-		'chipotle'     => 'Your Chipotle order',
-		'colophon'     => 'How the site is made, with which tools and technologies',
-		'community'    => 'What a community is about and its values',
-		'concerts'     => 'Concerts you\'ve attended',
-		'contact'      => 'Ways for people to contact you',
-		'daylists'     => 'Spotify Daylists created for you in the past',
-		'death'        => 'Instructions for family and friends in case of your death',
-		'defaults'     => 'The apps you use for various tasks',
-		'disability'   => 'Your disabilities and how they affect you',
-		'elsewhere'    => 'Output or writing on sites other than your own',
-		'follow'       => 'Your feeds and other ways to subscribe',
-		'for'          => 'Honoring loved ones or thanking those who supported the work',
-		'glossary'     => 'Words you often use and what they mean',
-		'green'        => 'How you contribute positively to the environment',
-		'guy'          => 'An "I\'m an insert interest here guy" style page',
-		'hats'         => 'Your hats',
-		'hello'        => 'The ways you prefer to keep in touch',
-		'hills'        => 'Foolish hills you\'re willing to die on',
-		'ideas'        => 'Things you want to make, or concepts you\'re considering',
-		'interests'    => 'Things you\'re passionate about',
-		'junk'         => 'An indie-web yard sale',
-		'languages'    => 'Languages you speak, understand, write, or are learning',
-		'links'        => 'Links to sites you want to share or save for later',
-		'next'         => 'What you\'re going to do next',
-		'nope'         => 'Things you don\'t like or don\'t want to do',
-		'now'          => 'What you\'re focused on at this point in your life',
-		'pfp'          => 'A timeline of your profile pictures',
-		'photo'        => 'A single photo, swapped now and then',
-		'podroll'      => 'Podcasts you recommend',
-		'posse'        => 'Your POSSE and cross-posting strategy',
-		'postroll'     => 'Interesting or impactful blog posts you\'ve read',
-		'predictions'  => 'Forecasts and long-term views on how the world may change',
-		'pricing'      => 'Product or service costs',
-		'questions'    => 'Questions you\'re asking or thinking about',
-		'saudade'      => 'Honoring what and whom you miss, with love',
-		'save'         => 'Referral links and discount codes for things you recommend',
-		'self-hosting' => 'The services you host or manage yourself',
-		'shoebox'      => 'A place for odds and ends',
-		'since'        => 'Time since you started or stopped something',
-		'sitemap'      => 'A list of pages on a website',
-		'slashes'      => 'A list of all your slash pages',
-		'someday'      => 'Things you\'d someday like to achieve, explore, or learn',
-		'style'        => 'A personal or design style guide',
-		'til'          => 'Concise write-ups on small things you\'ve learned',
-		'tip'          => 'A way for people to tip you or buy you a coffee',
-		'top4'         => 'Your ranked top three favorites and an honorable mention',
-		'uses'         => 'The things you use on a daily basis',
-		'verify'       => 'Your online identities, listed and proven',
-		'where'        => 'Your current location',
-		'why'          => 'What you care about and where you\'re heading',
-		'wish'         => 'A wishlist that helps people connect with you',
-		'yep'          => 'Things you agree with or will do',
+		'about'        => array( 'description' => 'A page all about you' ),
+		'ai'           => array( 'description' => 'Describes how you use, or don\'t use, AI' ),
+		'blank'        => array( 'description' => 'A page left intentionally blank' ),
+		'blogroll'     => array( 'description' => 'Other sites you read, follow, or recommend' ),
+		'calendar'     => array( 'description' => 'Dates from movies, TV, and culture that you observe' ),
+		'canon'        => array( 'description' => 'An annotated list of the things that have most shaped you' ),
+		'carry'        => array( 'description' => 'Your everyday carry items' ),
+		'caw'          => array( 'description' => 'Crows' ),
+		'celebrities'  => array( 'description' => 'Celebrities you\'ve spotted or met' ),
+		'changelog'    => array(
+			'description' => 'A summary of changes to your website',
+			'aliases'     => array( 'log' ),
+		),
+		'chipotle'     => array( 'description' => 'Your Chipotle order' ),
+		'colophon'     => array( 'description' => 'How the site is made, with which tools and technologies' ),
+		'community'    => array( 'description' => 'What a community is about and its values' ),
+		'concerts'     => array( 'description' => 'Concerts you\'ve attended' ),
+		'contact'      => array( 'description' => 'Ways for people to contact you' ),
+		'daylists'     => array( 'description' => 'Spotify Daylists created for you in the past' ),
+		'death'        => array( 'description' => 'Instructions for family and friends in case of your death' ),
+		'defaults'     => array( 'description' => 'The apps you use for various tasks' ),
+		'disability'   => array( 'description' => 'Your disabilities and how they affect you' ),
+		'elsewhere'    => array(
+			'description' => 'Output or writing on sites other than your own',
+			'aliases'     => array( 'appearances' ),
+		),
+		'follow'       => array(
+			'description' => 'Your feeds and other ways to subscribe',
+			'aliases'     => array( 'subscribe', 'feeds' ),
+		),
+		'for'          => array(
+			'description' => 'Honoring loved ones or thanking those who supported the work',
+			'aliases'     => array( 'dedication' ),
+		),
+		'glossary'     => array(
+			'description' => 'Words you often use and what they mean',
+			'aliases'     => array( 'lexicon', 'phrased' ),
+		),
+		'green'        => array( 'description' => 'How you contribute positively to the environment' ),
+		'guy'          => array( 'description' => 'An "I\'m an insert interest here guy" style page' ),
+		'hats'         => array( 'description' => 'Your hats' ),
+		'hello'        => array( 'description' => 'The ways you prefer to keep in touch' ),
+		'hills'        => array(
+			'description' => 'Foolish hills you\'re willing to die on',
+			'aliases'     => array( 'hill' ),
+		),
+		'ideas'        => array( 'description' => 'Things you want to make, or concepts you\'re considering' ),
+		'interests'    => array( 'description' => 'Things you\'re passionate about' ),
+		'junk'         => array(
+			'description' => 'An indie-web yard sale',
+			'aliases'     => array( 'sale', 'buy' ),
+		),
+		'languages'    => array( 'description' => 'Languages you speak, understand, write, or are learning' ),
+		'links'        => array(
+			'description' => 'Links to sites you want to share or save for later',
+			'aliases'     => array( 'bookmarks' ),
+		),
+		'next'         => array( 'description' => 'What you\'re going to do next' ),
+		'nope'         => array( 'description' => 'Things you don\'t like or don\'t want to do' ),
+		'now'          => array( 'description' => 'What you\'re focused on at this point in your life' ),
+		'pfp'          => array( 'description' => 'A timeline of your profile pictures' ),
+		'photo'        => array(
+			'description' => 'A single photo, swapped now and then',
+			'aliases'     => array( 'pic' ),
+		),
+		'podroll'      => array( 'description' => 'Podcasts you recommend' ),
+		'posse'        => array( 'description' => 'Your POSSE and cross-posting strategy' ),
+		'postroll'     => array( 'description' => 'Interesting or impactful blog posts you\'ve read' ),
+		'predictions'  => array( 'description' => 'Forecasts and long-term views on how the world may change' ),
+		'pricing'      => array( 'description' => 'Product or service costs' ),
+		'questions'    => array( 'description' => 'Questions you\'re asking or thinking about' ),
+		'saudade'      => array( 'description' => 'Honoring what and whom you miss, with love' ),
+		'save'         => array(
+			'description' => 'Referral links and discount codes for things you recommend',
+			'aliases'     => array( 'referrals' ),
+		),
+		'self-hosting' => array(
+			'description' => 'The services you host or manage yourself',
+			'aliases'     => array( 'self-hosted', 'hosted' ),
+		),
+		'shoebox'      => array( 'description' => 'A place for odds and ends' ),
+		'since'        => array( 'description' => 'Time since you started or stopped something' ),
+		'sitemap'      => array( 'description' => 'A list of pages on a website' ),
+		'slashes'      => array( 'description' => 'A list of all your slash pages' ),
+		'someday'      => array( 'description' => 'Things you\'d someday like to achieve, explore, or learn' ),
+		'style'        => array( 'description' => 'A personal or design style guide' ),
+		'til'          => array(
+			'description' => 'Concise write-ups on small things you\'ve learned',
+			'aliases'     => array( 'ways' ),
+		),
+		'tip'          => array(
+			'description' => 'A way for people to tip you or buy you a coffee',
+			'aliases'     => array( 'pay', 'coffee' ),
+		),
+		'top4'         => array(
+			'description' => 'Your ranked top three favorites and an honorable mention',
+			'aliases'     => array( 'topfour' ),
+		),
+		'uses'         => array( 'description' => 'The things you use on a daily basis' ),
+		'verify'       => array( 'description' => 'Your online identities, listed and proven' ),
+		'where'        => array( 'description' => 'Your current location' ),
+		'why'          => array( 'description' => 'What you care about and where you\'re heading' ),
+		'wish'         => array( 'description' => 'A wishlist that helps people connect with you' ),
+		'yep'          => array( 'description' => 'Things you agree with or will do' ),
 	);
 
 	/**
 	 * Filters the slash pages that can be set on the settings page.
 	 *
-	 * @param string[] $slashpages Map of slash page name => description.
+	 * @param array[] $slashpages Map of slash page name => `description` and optional `aliases`.
 	 */
 	return \apply_filters( 'well_known_slashpages', $slashpages );
 }
@@ -197,7 +241,8 @@ function get_values() {
  * @return array[] List of slash pages (`category`, `text`, `url`).
  */
 function get_outlines() {
-	$links = array();
+	$slashpages = get_slashpages();
+	$links      = array();
 
 	foreach ( get_values() as $name => $value ) {
 		if ( \is_int( $value ) ) {
@@ -212,8 +257,11 @@ function get_outlines() {
 			$url  = $value;
 		}
 
+		// All names of the page, the first name first.
+		$names = \array_merge( array( $name ), isset( $slashpages[ $name ]['aliases'] ) ? $slashpages[ $name ]['aliases'] : array() );
+
 		$links[] = array(
-			'category' => '/' . $name,
+			'category' => '/' . \implode( ',/', $names ),
 			'text'     => $text,
 			'url'      => $url,
 		);
@@ -231,46 +279,34 @@ function get_outlines() {
  * Print the OPML document.
  */
 function render_opml() {
-	echo '<?xml version="1.0" encoding="' . \esc_attr( \get_option( 'blog_charset' ) ) . '"?>' . PHP_EOL;
-	echo '<opml version="2.0">' . PHP_EOL;
-
 	// The script shows the OPML as a page in the browser.
 	$translations = \load_script_textdomain( SCRIPT, 'wellknownslashpages' );
 
-	if ( $translations ) {
-		\printf(
-			"\t" . '<script xmlns="http://www.w3.org/1999/xhtml" type="application/json" id="well-known-slashpages-translations">%s</script>' . PHP_EOL,
-			\htmlspecialchars( $translations, ENT_XML1 | ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped for XML.
-		);
-	}
+	echo '<?xml version="1.0" encoding="' . \esc_attr( \get_option( 'blog_charset' ) ) . '"?>' . PHP_EOL;
 
-	foreach ( get_script_urls() as $src ) {
-		\printf(
-			"\t" . '<script xmlns="http://www.w3.org/1999/xhtml" src="%s" defer=""/>' . PHP_EOL, // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- An OPML document has no wp_head().
-			\htmlspecialchars( $src, ENT_XML1 | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped for XML.
-		);
-	}
-
-	echo "\t<head>" . PHP_EOL;
-	/* translators: %s: Site title. */
-	echo "\t\t<title>" . \esc_html( \sprintf( \__( 'Slash pages of %s', 'wellknownslashpages' ), \get_bloginfo( 'name', 'display' ) ) ) . '</title>' . PHP_EOL;
-	echo "\t\t<dateCreated>" . \esc_html( \gmdate( 'D, d M Y H:i:s' ) ) . ' GMT</dateCreated>' . PHP_EOL;
-	echo "\t\t<ownerId>" . \esc_html( \home_url( '/' ) ) . '</ownerId>' . PHP_EOL;
-	echo "\t\t<docs>http://opml.org/spec2.opml</docs>" . PHP_EOL;
-	echo "\t</head>" . PHP_EOL;
-	echo "\t<body>" . PHP_EOL;
-
-	foreach ( get_outlines() as $link ) {
-		\printf(
-			"\t\t" . '<outline type="link" text="%s" category="%s" url="%s"/>' . PHP_EOL,
-			\esc_attr( $link['text'] ),
-			\esc_attr( $link['category'] ),
-			\esc_url( $link['url'] )
-		);
-	}
-
-	echo "\t</body>" . PHP_EOL;
-	echo '</opml>' . PHP_EOL;
+	// phpcs:disable Generic.WhiteSpace.ScopeIndent -- Control tags at the start of the line keep the indentation of the XML.
+	?>
+<opml version="2.0">
+<?php if ( $translations ) : ?>
+	<script xmlns="http://www.w3.org/1999/xhtml" type="application/json" id="well-known-slashpages-translations"><?php echo \htmlspecialchars( $translations, ENT_XML1 | ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped for XML. ?></script>
+<?php endif; ?>
+<?php foreach ( get_script_urls() as $src ) : ?>
+	<script xmlns="http://www.w3.org/1999/xhtml" src="<?php echo \htmlspecialchars( $src, ENT_XML1 | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Escaped for XML, an OPML document has no wp_head(). ?>" defer=""/>
+<?php endforeach; ?>
+	<head>
+		<title><?php echo \esc_html( \sprintf( /* translators: %s: Site title. */ \__( 'Slash pages of %s', 'wellknownslashpages' ), \get_bloginfo( 'name', 'display' ) ) ); ?></title>
+		<dateCreated><?php echo \esc_html( \gmdate( 'D, d M Y H:i:s' ) ); ?> GMT</dateCreated>
+		<ownerId><?php echo \esc_html( \home_url( '/' ) ); ?></ownerId>
+		<docs>http://opml.org/spec2.opml</docs>
+	</head>
+	<body>
+<?php foreach ( get_outlines() as $link ) : ?>
+		<outline type="link" text="<?php echo \esc_attr( $link['text'] ); ?>" category="<?php echo \esc_attr( $link['category'] ); ?>" url="<?php echo \esc_url( $link['url'] ); ?>"/>
+<?php endforeach; ?>
+	</body>
+</opml>
+<?php
+	// phpcs:enable Generic.WhiteSpace.ScopeIndent
 }
 
 /**
@@ -416,7 +452,7 @@ function render_settings_page() {
 							<?php endforeach; ?>
 						</select>
 						<input type="url" class="regular-text" placeholder="https://" aria-label="<?php echo \esc_attr( \sprintf( /* translators: %s: Slash page name. */ \__( 'Custom URL for /%s', 'wellknownslashpages' ), $name ) ); ?>" name="<?php echo \esc_attr( OPTION . '[' . $name . '][url]' ); ?>" value="<?php echo \is_string( $value ) ? \esc_attr( $value ) : ''; ?>" />
-						<p class="description"><?php echo \esc_html( $slashpages[ $name ] ); ?></p>
+						<p class="description"><?php echo \esc_html( $slashpages[ $name ]['description'] ); ?></p>
 					</td>
 				</tr>
 				<?php endforeach; ?>

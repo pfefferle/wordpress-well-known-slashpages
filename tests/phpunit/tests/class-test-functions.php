@@ -104,7 +104,7 @@ class Test_Functions extends \WP_UnitTestCase {
 
 	/**
 	 * Only set and published slash pages are listed, pages with their title,
-	 * URLs with the name.
+	 * URLs with the name, and with all names of the page as category.
 	 */
 	public function test_get_outlines() {
 		$about = $this->create_page( 'about' );
@@ -113,10 +113,11 @@ class Test_Functions extends \WP_UnitTestCase {
 		\update_option(
 			Slashpages\OPTION,
 			array(
-				'about'    => $about,
-				'now'      => 'https://example.com/jetzt/',
-				'colophon' => $draft,
-				'uses'     => 0,
+				'about'     => $about,
+				'changelog' => 'https://example.com/log/',
+				'now'       => 'https://example.com/jetzt/',
+				'colophon'  => $draft,
+				'uses'      => 0,
 			)
 		);
 
@@ -126,6 +127,11 @@ class Test_Functions extends \WP_UnitTestCase {
 					'category' => '/about',
 					'text'     => 'About page',
 					'url'      => \get_permalink( $about ),
+				),
+				array(
+					'category' => '/changelog,/log',
+					'text'     => 'Changelog',
+					'url'      => 'https://example.com/log/',
 				),
 				array(
 					'category' => '/now',
