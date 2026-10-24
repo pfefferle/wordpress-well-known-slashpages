@@ -103,6 +103,31 @@ class Test_Functions extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * The first save keeps the values, although WordPress sanitizes a new
+	 * option twice.
+	 */
+	public function test_first_save() {
+		Slashpages\register_setting();
+		$about = $this->create_page( 'about' );
+
+		\update_option(
+			Slashpages\OPTION,
+			array(
+				'about' => array( 'page' => (string) $about ),
+				'now'   => array(
+					'page' => 'url',
+					'url'  => 'https://example.com/jetzt/',
+				),
+			)
+		);
+
+		$values = \get_option( Slashpages\OPTION );
+
+		$this->assertSame( $about, $values['about'] );
+		$this->assertSame( 'https://example.com/jetzt/', $values['now'] );
+	}
+
+	/**
 	 * Only set and published slash pages are listed, pages with their title,
 	 * URLs with the name, and with all names of the page as category.
 	 */

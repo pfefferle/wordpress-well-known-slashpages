@@ -379,7 +379,10 @@ function register_setting() {
  * Every slash page is stored, also the empty ones, so a page that was set to
  * "None" does not fall back to the page with the same slug.
  *
- * @param array $input The submitted form values.
+ * WordPress sanitizes a new option twice, the second time with the values
+ * this function returned, so these are accepted too.
+ *
+ * @param array $input The submitted form values, or the sanitized values.
  *
  * @return array Map of slash page name => page ID (int) or URL (string).
  */
@@ -387,14 +390,19 @@ function sanitize( $input ) {
 	$settings = array();
 
 	foreach ( get_slashpages() as $name => $description ) {
-		$page = isset( $input[ $name ]['page'] ) ? $input[ $name ]['page'] : '';
-		$url  = isset( $input[ $name ]['url'] ) ? \esc_url_raw( \trim( $input[ $name ]['url'] ) ) : '';
+		$value = isset( $input[ $name ] ) ? $input[ $name ] : 0;
+
+		// The form sends the select and the URL field.
+		if ( \is_array( $value ) ) {
+			$page  = isset( $value['page'] ) ? $value['page'] : '';
+			$value = 'url' === $page && isset( $value['url'] ) ? \trim( $value['url'] ) : $page;
+		}
 
 		// The spec asks for absolute URLs.
-		if ( 'url' === $page && \in_array( \wp_parse_url( $url, PHP_URL_SCHEME ), array( 'http', 'https' ), true ) ) {
-			$settings[ $name ] = $url;
+		if ( \is_string( $value ) && \in_array( \wp_parse_url( $value, PHP_URL_SCHEME ), array( 'http', 'https' ), true ) ) {
+			$settings[ $name ] = \esc_url_raw( $value );
 		} else {
-			$settings[ $name ] = \absint( $page );
+			$settings[ $name ] = \absint( $value );
 		}
 	}
 
