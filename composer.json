@@ -1,0 +1,50 @@
+{
+    "name": "pfefferle/wordpress-well-known-slashpages",
+    "description": "Lists the slash pages of the site (/about, /now, /uses, …) as OPML at /.well-known/slashpages.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Matthias Pfefferle",
+            "email": "pfefferle@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "composer/installers": "^1.0 || ^2.0"
+    },
+    "require-dev": {
+        "phpcompatibility/php-compatibility": "*",
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "squizlabs/php_codesniffer": "3.*",
+        "wp-coding-standards/wpcs": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
+        "phpunit/phpunit": "^9.6",
+        "yoast/phpunit-polyfills": "^4.0"
+    },
+    "extra": {
+        "installer-name": "well-known-slashpages"
+    },
+    "scripts": {
+        "test": [
+            "composer install",
+            "bin/install-wp-tests.sh well-known-slashpages-test root well-known-slashpages-test test-db latest true",
+            "vendor/bin/phpunit"
+        ],
+        "test:wp-env": [
+            "npx wp-env run tests-cli --env-cwd=\"wp-content/plugins/well-known-slashpages\" vendor/bin/phpunit"
+        ],
+        "lint": [
+            "vendor/bin/phpcs"
+        ],
+        "lint:fix": [
+            "vendor/bin/phpcbf"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true
+        }
+    }
+}
